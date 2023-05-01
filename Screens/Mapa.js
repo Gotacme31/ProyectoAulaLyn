@@ -12,14 +12,14 @@ const defaultPickerOptions = {
   width: DEFAULT_WITH,
 };
 
-function App({navigation}){
+function App({navigation}) {
   const [imgSrc, setImgSrc] = useState(null);
   const [text, setText] = useState('');
- 
-  const recognizeTextFromImage = async (path) => {
+
+  const recognizeTextFromImage = async path => {
     try {
       const texto = await TextRecognition.recognize(path);
-      let recognizedText = texto.join(" ");
+      let recognizedText = texto.join(' ');
       console.log(recognizedText);
       Tts.speak(recognizedText);
       setText(recognizedText);
@@ -52,47 +52,45 @@ function App({navigation}){
       }
     }
   };
-  const speakinGreeting = () =>{
-    
-    navigation.navigate("voz");
-   }
+  const speakinGreeting = () => {
+    navigation.navigate('voz');
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => {
+       <TouchableOpacity onPress={() => {
               speakinGreeting();
             }}>
-          <Image 
-        style={styles.image}
-        source={require('../img/lyn.png')}/>
-          </TouchableOpacity>
-      <Image 
-        style={styles.imag}
-        source={require('../img/lynya.png')}/>
+          <View>
+            <Text style={{
+              color: 'black'
+            }}>audioooooooo</Text>
+          </View>
+          </TouchableOpacity> 
+      <Image style={styles.imag} source={require('../img/lynya.png')} />
       <View style={styles.options}>
         <View style={styles.button}>
-          
-          <TouchableOpacity onPress={() => {
+          <TouchableOpacity
+            onPress={() => {
               recognizeFromCamera();
             }}>
-          <Image 
-        style={styles.image}
-        source={require('../img/botcamara.png')}/>
+            <Image
+              style={styles.image}
+              source={require('../img/botcamara.png')}
+            />
           </TouchableOpacity>
         </View>
-        
       </View>
       {imgSrc && (
         <View style={styles.imageContainer}>
           <Image style={styles.imagen} source={imgSrc} />
         </View>
       )}
-       <TouchableOpacity onPress={() => {
-              recognizeFromPicker();
-            }}>
-          <Image 
-        style={styles.image}
-        source={require('../img/bgaler.png')}/>
-          </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          recognizeFromPicker();
+        }}>
+        <Image style={styles.image} source={require('../img/bgaler.png')} />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -102,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
   },
   options: {
     flexDirection: 'row',
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    border:20
+    border: 20,
   },
   imagen: {
     marginVertical: 15,
@@ -132,20 +130,20 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  text:{
-    color:'black',
+  text: {
+    color: 'black',
   },
-  
-  image:{
-    width:300,
-    marginTop:60,
-    marginBottom:60,
-    height:60,
+
+  image: {
+    width: 300,
+    marginTop: 60,
+    marginBottom: 60,
+    height: 60,
   },
-  imag:{
-    width:40,
-    height:40
-  }
+  imag: {
+    width: 40,
+    height: 40,
+  },
 });
 
 export default App;

@@ -1,10 +1,18 @@
 import  React, {useEffect} from 'react';
 import { StyleSheet, Text, View, Image,Button, Icon, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Tts from 'react-native-tts';
-
+import auth from '@react-native-firebase/auth';
 
 export default function Confirmacion({navigation}){
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged((user) => {
+      console.log(user);
+      setUser(user);
+      if (initializing) setInitializing(false);
+    });
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
    const speakinGreeting = () =>{
     const greeting = 'bienvenido a lyn, a continuacion encontrara dos botones, uno es para elegir una imagen, y el otro para abrir la camara';

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "203051124108",
+    "project_id": "ztaroplyn",
+    "storage_bucket": "ztaroplyn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203051124108:android:07dd93e0edde244f2702a9",
+        "android_client_info": {
+          "package_name": "com.lyn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203051124108-7tslrlbm9s8km3vqgeifasm6gqe7kcng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lyn",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "203051124108-bmrdvfj85i14rtn55dq7a03fh1eoise6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfdZ591jvlrfFnslb2wEPvnYmCl6ExOA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203051124108-4b1iq3i4ksiud4e844bl3c285ja4nl6k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
