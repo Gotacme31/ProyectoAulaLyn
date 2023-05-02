@@ -79,15 +79,16 @@ function VoiceTest(): JSX.Element {
   }, []);
 
   const _startRecognizing = async () => {
-    setState({
-      recognized: '',
-      pitch: '',
-      error: '',
-      started: '',
-      results: [],
-      partialResults: [],
-      end: '',
-    });
+    console.log("andale si")
+    // setState({
+    //   recognized: '',
+    //   pitch: '',
+    //   error: '',
+    //   started: '',
+    //   results: [],
+    //   partialResults: [],
+    //   end: '',
+    // });
 
     try {
       await Voice.start('es-MX');
