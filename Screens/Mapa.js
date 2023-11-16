@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  Button
+} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import TextRecognition from 'react-native-text-recognition';
 import Tts from 'react-native-tts';
@@ -15,6 +23,7 @@ const defaultPickerOptions = {
 function App({navigation}) {
   const [imgSrc, setImgSrc] = useState(null);
   const [text, setText] = useState('');
+  const width = Dimensions.get('window').width;
 
   const recognizeTextFromImage = async path => {
     try {
@@ -55,42 +64,208 @@ function App({navigation}) {
   const speakinGreeting = () => {
     navigation.navigate('voz');
   };
+  const speakin = () => {
+    navigation.navigate('perfil');
+  };
   return (
-    <View style={styles.container}>
-       <TouchableOpacity onPress={() => {
-              speakinGreeting();
-            }}>
-          <View>
-            <Text style={{
-              color: 'black'
-            }}>audioooooooo</Text>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: 'white',
+      }}>
+      <View
+        style={{
+          backgroundColor: 'black',
+          width: '60%',
+          height: '6%',
+          marginTop: 9,
+          borderRadius: 25,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 8,
+        }}>
+        <TouchableOpacity
+          style={{
+            width: 35,
+            height: 35,
+          }}
+          onPress={() => {
+            speakinGreeting();
+          }}>
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+            }}
+            source={require('../img/micro.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            width: 35,
+            height: 35,
+            
+          }}
+          onPress={() => {
+            speakin();
+          }}>
+            <View style={{
+            width:38,
+            height: 38,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:20
+          }}>
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+            }}
+            source={require('../img/usuario.png')}
+          />
           </View>
-          </TouchableOpacity> 
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            width: 35,
+            height: 35,
+            marginBottom:4
+          }}
+          onPress={() => {
+            navigation.navigate("habla")
+          }}>
+            <View style={{
+            width:38,
+            height: 38,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:20
+          }}>
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+            }}
+            source={require('../img/habla.png')}
+          />
+          </View>
+        </TouchableOpacity>
+      </View>
       <Image style={styles.imag} source={require('../img/lynya.png')} />
-      <View style={styles.options}>
-        <View style={styles.button}>
-          <TouchableOpacity
-            onPress={() => {
-              recognizeFromCamera();
-            }}>
-            <Image
-              style={styles.image}
-              source={require('../img/botcamara.png')}
-            />
-          </TouchableOpacity>
+      <View style={styles.container}>
+        {imgSrc && (
+          <View style={styles.imageContainer}>
+            <Image style={styles.imagen} source={imgSrc} />
+          </View>
+        )}
+        <View style={styles.options}>
+          <View style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                recognizeFromCamera();
+              }}
+              style={{
+                backgroundColor:'black',
+                width: 260,
+                height:50,
+                borderRadius:30,
+                justifyContent: 'space-between',
+                flexDirection:'row',
+                alignItems:'center',
+                padding:8,
+                marginBottom:30
+              }}>
+              <Text style={{
+                color:'white',
+                fontSize:28,
+                marginLeft:7
+              }}>CÁMARA</Text>
+               <View style={{
+            width:37,
+            height: 37,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:18
+          }}>
+              <Image style={{
+                width:28,
+                height:28,
+              }} source={require('../img/camara.png')} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            recognizeFromPicker();
+          }} style={{
+            backgroundColor:'black',
+            width: 260,
+            height:50,
+            borderRadius:30,
+            justifyContent: 'space-between',
+            flexDirection:'row',
+            alignItems:'center',
+            padding:8,
+            marginBottom:30
+          }} >
+           <Text style={{
+                color:'white',
+                fontSize:28,
+                marginLeft:7
+              }}>GALERIA</Text>
+               <View style={{
+            width:37,
+            height: 37,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:18
+          }}>
+              <Image style={{
+                width:30,
+                height:30,
+              }} source={require('../img/texto.png')} />
+              </View>
+        </TouchableOpacity>
+        <View style={{
+          width:106,
+          height:106,
+          borderRadius:55,
+          backgroundColor:'black',
+          justifyContent: 'center',
+          alignItems:'center',
+          marginTop:20,
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            Tts.stop();
+          }}
+          style={{
+            backgroundColor: 'red',
+            width: 100,
+            height: 100,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius:50
+          }}>
+          <Text style={{color: 'white', fontSize: 25, fontWeight: 'bold',}}>S T O P </Text>
+        </TouchableOpacity>
+
         </View>
       </View>
-      {imgSrc && (
-        <View style={styles.imageContainer}>
-          <Image style={styles.imagen} source={imgSrc} />
-        </View>
-      )}
-      <TouchableOpacity
-        onPress={() => {
-          recognizeFromPicker();
-        }}>
-        <Image style={styles.image} source={require('../img/bgaler.png')} />
-      </TouchableOpacity>
+      <Image
+        style={{
+          width: 80,
+          height: 80,
+        }}
+        source={require('../img/ztar.png')}
+      />
     </View>
   );
 }
@@ -111,9 +286,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   imageContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
-    border: 20,
+    width: '100%',
   },
   imagen: {
     marginVertical: 15,
@@ -136,13 +310,14 @@ const styles = StyleSheet.create({
 
   image: {
     width: 300,
-    marginTop: 60,
-    marginBottom: 60,
+    marginTop: 10,
+    marginBottom: 30,
     height: 60,
   },
   imag: {
-    width: 40,
-    height: 40,
+    width: 55,
+    height: 55,
+    marginTop: 60,
   },
 });
 

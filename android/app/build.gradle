@@ -119,10 +119,17 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+         release {
+      storeFile file('lyn.keystore')
+      storePassword 'alery050831'
+      keyAlias 'lyn'
+      keyPassword 'alery050831'
+    }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

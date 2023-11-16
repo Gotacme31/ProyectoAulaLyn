@@ -1,4 +1,4 @@
-const API = "http://192.168.155.119:3000/tasks";
+const API = "https://back-node-production-9647.up.railway.app/tasks";
 
 export const saveTask = async (newTask) => {
     const res = await fetch(API, {

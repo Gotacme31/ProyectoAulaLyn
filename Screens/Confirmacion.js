@@ -15,7 +15,7 @@ export default function Confirmacion({navigation}){
   }, []);
 
    const speakinGreeting = () =>{
-    const greeting = 'bienvenido a lyn, a continuacion encontrara dos botones, uno es para elegir una imagen, y el otro para abrir la camara';
+    const greeting = 'axel es gay';
     Tts.speak(greeting);
     navigation.navigate("mapa");
    }

@@ -11,6 +11,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import Tts from 'react-native-tts';
+import {saveTask} from '../api';
 
 const Section = ({children, title}) => {
   return (
@@ -38,11 +39,14 @@ const Inicio = ({navigation}) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [userLoginData, setUserLoginData] = useState({email: '', password: ''});
+  const [task, setTask] = useState('');
 
   // aut necesita un callback que ejecutar cada que cambia el estado de autenticación, en este caso es un simple set
   // al estado user
   const onAuthStateChanged = user => {
-    console.log(user);
+    if(user !== null){
+      navigation.navigate("inicio")
+    }
     setUser(user);
     if (initializing) setInitializing(false);
   };
@@ -70,7 +74,7 @@ const Inicio = ({navigation}) => {
   });
 
   // Función para registrar un usuario en Firebase, inicia la sesión automáticamente si el registro fue exitoso
-  const registerWithEmailAndPassword = () => {
+   const registerWithEmailAndPassword =  () => {
     auth()
       .createUserWithEmailAndPassword(
         userLoginData.email,
@@ -78,6 +82,10 @@ const Inicio = ({navigation}) => {
       )
       .then(() => {
         console.log('User account created & signed in!');
+        setTask(userLoginData.email);
+        const task=({email: userLoginData.email})
+        saveTask(task);
+       
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -114,10 +122,11 @@ const Inicio = ({navigation}) => {
     try {
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       try {
-        // Get the users ID token
-        console.log('si');
         const user = await GoogleSignin.signIn();
-        console.log('no');
+        const task=({email: user.user.email})
+        console.log(task,"no")
+        saveTask(task);
+
         try {
           // Create a Google credential with the token
           const googleCredential = auth.GoogleAuthProvider.credential(
@@ -186,7 +195,7 @@ const Inicio = ({navigation}) => {
               color: 'black',
               fontSize: 17,
               marginBottom: 30,
-              backgroundColor: 'grey',
+              backgroundColor: '#E1E1E1',
               width: '100%',
               borderRadius: 20,
             }}
@@ -214,7 +223,7 @@ const Inicio = ({navigation}) => {
               color: 'black',
               fontSize: 17,
               marginBottom: 30,
-              backgroundColor: 'grey',
+              backgroundColor: '#E1E1E1',
               width: '100%',
               borderRadius: 20,
             }}
@@ -302,7 +311,7 @@ const Inicio = ({navigation}) => {
           <TouchableOpacity
             onPress={async () => {
               const greeting =
-                'bienvenido a lyn, a continuacion encontrara dos botones, uno es para elegir una imagen, y el otro para abrir la camara';
+                'hola, a continuación encontrara tres botones, el superior es para abrir la cámara y tomar una foto, el intermedio es para seleccionar una imagen de su galeria y el inferior es para detener el audio. en la parte superior encontrará una barra de navegación, donde puede consultar su perfil, dirigirse al modulo de síntesis del habla o al modulo de Voz Virtual';
               Tts.speak(greeting);
               navigation.navigate('mapa');
             }}
@@ -314,7 +323,7 @@ const Inicio = ({navigation}) => {
               style={{
                 width: 65,
                 height: 65,
-                marginBottom:90
+                marginBottom: 90,
               }}
               source={require('../img/lynya.png')}
             />
@@ -324,7 +333,7 @@ const Inicio = ({navigation}) => {
                 height: 160,
                 backgroundColor: '#000000',
                 alignItems: 'center',
-                borderRadius: 80
+                borderRadius: 80,
               }}>
               <Image
                 source={
@@ -345,7 +354,7 @@ const Inicio = ({navigation}) => {
               style={{
                 color: 'black',
                 fontSize: 30,
-                marginTop:80
+                marginTop: 80,
               }}>
               Bienvenid@
             </Text>
@@ -357,7 +366,7 @@ const Inicio = ({navigation}) => {
               }}>
               {user.email}
             </Text>
-            {/* <Button title="Cerrar sesión" onPress={logout}></Button> */}
+
             <View
               style={{
                 alignItems: 'center',

@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableHighlight, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Voice, {
   SpeechErrorEvent,
   SpeechRecognizedEvent,
   SpeechResultsEvent,
 } from '@react-native-voice/voice';
 
-function VoiceTest(): JSX.Element {
+function VoiceTest({ navigation }): JSX.Element {
   const [state, setState] = useState({
     recognized: '',
     pitch: '',
@@ -105,13 +105,6 @@ function VoiceTest(): JSX.Element {
     }
   };
 
-  const _cancelRecognizing = async () => {
-    try {
-      await Voice.cancel();
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   const _destroyRecognizer = async () => {
     try {
@@ -129,46 +122,177 @@ function VoiceTest(): JSX.Element {
       end: '',
     });
   };
-
+  const speakinGreeting = () => {
+    navigation.navigate('mapa');
+  };
+  const speakin = () => {
+    navigation.navigate('perfil');
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native Voice!</Text>
-      <Text style={styles.instructions}>
-        Press the button and start speaking.
-      </Text>
-      <Text style={styles.stat}>{`Started: ${state.started}`}</Text>
-      <Text style={styles.stat}>{`Recognized: ${state.recognized}`}</Text>
-      <Text style={styles.stat}>{`Pitch: ${state.pitch}`}</Text>
-      <Text style={styles.stat}>{`Error: ${state.error}`}</Text>
-      <Text style={styles.stat}>Results</Text>
-      {state.results.map((result, index) => {
-        return (
-          <Text key={`result-${index}`} style={styles.stat}>
-            {result}
-          </Text>
-        );
-      })}
-      <Text style={styles.stat}>Partial Results</Text>
-      {state.partialResults.map((result, index) => {
-        return (
-          <Text key={`partial-result-${index}`} style={styles.stat}>
-            {result}
-          </Text>
-        );
-      })}
-      <Text style={styles.stat}>{`End: ${state.end}`}</Text>
-      <TouchableHighlight onPress={_startRecognizing}>
-        <Text style={styles.play}>xd</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={_stopRecognizing}>
-        <Text style={styles.action}>Stop Recognizing</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={_cancelRecognizing}>
-        <Text style={styles.action}>Cancel</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={_destroyRecognizer}>
-        <Text style={styles.action}>Destroy</Text>
-      </TouchableHighlight>
+
+      <View
+        style={{
+          backgroundColor: 'black',
+          width: '60%',
+          height: '6%',
+          marginTop: 9,
+          borderRadius: 25,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
+          paddingHorizontal: 8,
+        }}>
+        <TouchableOpacity style={{
+          width: 35,
+          height: 35
+        }} onPress={() => {
+          speakinGreeting();
+        }}>
+          <View style={{
+            width:35,
+            height: 35,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:15
+          }}>
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+            }}
+            source={require('../img/texto.png')} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            width: 35,
+            height: 35,
+          }}
+          onPress={() => {
+            speakin();
+          }}>
+            <View style={{
+            width:38,
+            height: 38,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:20
+          }}>
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+            }}
+            source={require('../img/usuario.png')}
+          />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            width: 35,
+            height: 35,
+            marginBottom:4
+          }}
+          onPress={() => {
+            navigation.navigate("habla")
+          }}>
+            <View style={{
+            width:38,
+            height: 38,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:20
+          }}>
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+            }}
+            source={require('../img/habla.png')}
+          />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={{
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        flex:1
+      }}>
+        
+        <Text style={{
+          fontSize:30,
+          color:'black'
+        }}>{`INICIA: ${state.started}`}</Text>
+        <View style={{
+          height: '42%',
+          backgroundColor: 'white',
+          width: '100%',
+        }}>
+          <ScrollView>
+          <Text style={styles.stat}>ESCUCHANDO: </Text>
+          
+        {state.partialResults.map((result, index) => {
+          return (
+            <Text key={`partial-result-${index}`} style={{color:'black'}}>
+              {result}
+            </Text>
+          );
+        })}
+        <Text style={styles.stat}>RESULTADO: </Text>
+        {state.results.map((result, index) => {
+          return (
+            <Text key={`result-${index}`} style={{color:'black'}}>
+              {result}
+            </Text>
+          );
+        })}
+       
+        </ScrollView>
+        </View>
+        <View style={{
+          backgroundColor: 'black',
+          width: '84%',
+          height: '16%',
+          marginTop: 15,
+          borderRadius: 45,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
+          paddingHorizontal: 8,
+        }}>
+       
+        <TouchableOpacity onPress={_stopRecognizing}>
+          <View>
+          <Text style={styles.action}>TERMINAR </Text>
+          <Text style={styles.action}>RECONOCIMIENTO </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={_startRecognizing}>
+        <View style={{
+            width:81,
+            height: 81,
+            backgroundColor:'white',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:40
+          }}>
+          <Image source={require('../img/button.png')}
+          style={{
+            width:80,
+            height: 80,
+          }} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={_destroyRecognizer}>
+          <Text style={styles.action}>DESTRUIR</Text>
+        </TouchableOpacity>
+        </View>
+      </View>
+      
     </View>
   );
 }
@@ -180,9 +304,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   welcome: {
     fontSize: 20,
@@ -191,19 +314,21 @@ const styles = StyleSheet.create({
   },
   action: {
     textAlign: 'center',
-    color: '#0000FF',
+    color: 'white',
     marginVertical: 5,
     fontWeight: 'bold',
+    fontSize: 15
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
+    color: 'purple',
     marginBottom: 5,
   },
   stat: {
     textAlign: 'center',
-    color: '#B0171F',
-    marginBottom: 1,
+    color: 'black',
+    marginBottom:15 ,
+    fontSize: 20,
   },
   play: {
     color: '#1be90c',
